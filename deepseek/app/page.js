@@ -1,8 +1,10 @@
 'use client';
 import { assets } from "@/assets/assets";
+import PromptBox from "@/components/PromptBox";
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import { useState } from "react";
+import Message from "@/components/Message";
 
 export default function Home() {
   const [expand, setExpand] = useState(false);
@@ -26,7 +28,7 @@ export default function Home() {
 
         {/* Center Content */}
         <div className="flex-1 flex flex-col items-center justify-center text-center">
-          {messages.length === 0 ? (
+          {messages.length !== 0 ? (
             <>
               <div className="flex items-center gap-3">
                 <Image src={assets.logo_icon} alt="" className="h-16 w-13" />
@@ -37,9 +39,12 @@ export default function Home() {
               </p>
             </>
           ) : (
-            <div></div>
+            <div>
+              <Message role='user' content='What is Next.js' />
+            </div>
           )
           }
+          <PromptBox isLoading={isLoading} setisLoading={setisLoading} />
           <p className="text-xs absolute bottom-1 text-gray-500">AI-generated, for refrence only</p>
         </div>
       </div>

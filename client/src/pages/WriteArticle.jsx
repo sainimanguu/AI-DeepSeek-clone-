@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Edit, Sparkle } from 'lucide-react'
+import { Edit, Sparkles } from 'lucide-react'
 
 const WriteArticle = () => {
 
@@ -23,7 +23,7 @@ const WriteArticle = () => {
 
             <form onSubmit={onSubmitHandler} className='w-full p-4 max-w-lg bg-white rounded-lg border border-gray-200'>
                 <div className='flex items-center gap-3'>
-                    <Sparkle className='w-6 text-[#4A7AFF]' />
+                    <Sparkles className='w-6 text-[#4A7AFF]' />
                     <h1 className='text-xl font-semibold'>Article Configuration</h1>
                 </div>
                 <p className='mt-6 text-sm font-medium'>Article topic</p>

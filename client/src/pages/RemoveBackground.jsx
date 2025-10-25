@@ -42,7 +42,7 @@ const RemoveBackground = () => {
                 <div className='flex-1 flex justify-center items-center'>
                     <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
                         <Eraser className='w-9 h-9' />
-                        <p>Upload an Image and press Remove Background to get started</p>
+                        <p>Upload an Image and press "Remove Background" to get started</p>
                     </div>
                 </div>
             </div>

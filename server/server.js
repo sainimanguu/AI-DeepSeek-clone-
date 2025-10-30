@@ -17,6 +17,12 @@ app.get('/', (req, res) => (
 app.get('/still', (req, res) => (
     res.send("Server is still live")
 ))
+app.get('/still', (req, res) => (
+    res.send("Server is still live")
+))
+app.get('/still', (req, res) => (
+    res.send("Server is still live")
+))
 
 app.use(requireAuth())
 

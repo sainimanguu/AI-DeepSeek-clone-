@@ -14,15 +14,6 @@ app.use(clerkMiddleware())
 app.get('/', (req, res) => (
     res.send("Server is live")
 ))
-app.get('/still', (req, res) => (
-    res.send("Server is still live")
-))
-app.get('/still', (req, res) => (
-    res.send("Server is still live")
-))
-app.get('/still', (req, res) => (
-    res.send("Server is still live")
-))
 
 app.use(requireAuth())
 

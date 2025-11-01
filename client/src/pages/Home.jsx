@@ -4,6 +4,7 @@ import Hero from '../components/Hero'
 import AITools from '../components/AITools'
 import Testimonial from '../components/Testimonial'
 import Footer from '../components/Footer'
+import Plan from '../components/Plan'
 
 
 const Home = () => {
@@ -13,7 +14,8 @@ const Home = () => {
             <Hero />
             <AITools />
             <Testimonial />
-            <Footer/>
+            <Plan />
+            <Footer />
         </>
 
 

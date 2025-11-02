@@ -20,7 +20,6 @@ const RemoveBackground = () => {
         e.preventDefault();
 
         try {
-
             setLoading(true)
 
             const formData = new FormData()
@@ -30,6 +29,8 @@ const RemoveBackground = () => {
 
             if (data.success) {
                 setContent(data.content)
+                toast.success("Background removed successfully!");
+
             } else {
                 toast.error(data.message)
             }
@@ -59,7 +60,7 @@ const RemoveBackground = () => {
 
                 <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#F6AB41] to-[#FF4938] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>{loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'>
                 </span> : <Eraser className='w-5' />}
-                    Remove Background
+                    {loading ? "Removing..." : "   Remove Background"}
                 </button>
 
 

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { dummyCreationData } from '../assets/assets'
 import { Sparkle } from 'lucide-react'
 import CreationItem from '../components/CreationItem'
+import axios from 'axios'
+
+
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const Dashboard = () => {
 

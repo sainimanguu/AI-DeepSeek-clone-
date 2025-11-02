@@ -4,6 +4,8 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react';
 
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+
 const RemoveObject = () => {
 
     const [input, setInput] = useState("");
@@ -32,6 +34,7 @@ const RemoveObject = () => {
 
             if (data.success) {
                 setContent(data.content)
+                toast.success("Object removed successfully!");
             } else {
                 toast.error(data.message)
             }
@@ -42,8 +45,6 @@ const RemoveObject = () => {
 
         setLoading(false)
     }
-
-
 
     return (
         <div className='h-full overflow-y-scroll p-6 flex items-start flex-wrap gap-4 text-slate-700'>
@@ -66,7 +67,7 @@ const RemoveObject = () => {
 
                     {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'>
                     </span> : <Scissors className='w-5' />}
-                    Remove Object
+                    {loading ? "Removing..." : "   Remove Object"}
                 </button>
 
 

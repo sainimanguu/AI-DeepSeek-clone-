@@ -29,12 +29,14 @@ const GenerateImages = () => {
         try {
 
             setLoading(true)
-            const prompt = `Generate an Image ${input} in the style ${selectedStyle}`
+            const prompt = `Generate an image of ${input} in the style ${selectedStyle}`
 
             const { data } = await axios.post('/api/ai/generate-image', { prompt, publish }, { headers: { Authorization: `Bearer ${await getToken()}` } })
 
             if (data.success) {
                 setContent(data.content)
+                toast.success("Image generated successfully!");
+
             } else {
                 toast.error(data.message)
             }
@@ -86,7 +88,7 @@ const GenerateImages = () => {
 
                 <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#02831e] to-[#02d749] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>{loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'>
                 </span> : <Image className='w-5' />}
-                    Generate Image
+                    {loading ? "Generating..." : "Generate Image"}
                 </button>
 
 

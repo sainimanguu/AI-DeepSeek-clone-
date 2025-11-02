@@ -3,6 +3,11 @@ import sql from '../configs/db.js'
 import { clerkClient } from "@clerk/express";
 import axios from 'axios'
 import { v2 as cloudinary } from 'cloudinary'
+import fs from 'fs';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+
+pdfjsLib.GlobalWorkerOptions.verbosity = 0;
+
 
 const AI = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -75,7 +80,7 @@ export const generateBlogTitle = async (req, res) => {
             model: "gemini-2.0-flash",
             messages: [{ role: "user", content: prompt, },],
             temperature: 0.5,
-            max_tokens: length,
+            max_tokens: 250,
         });
 
         const content = response.choices[0].message.content
@@ -142,7 +147,7 @@ export const removeImageBackground = async (req, res) => {
     try {
 
         const { userId } = req.auth();
-        const { image } = req.file;
+        const image = req.file;
         const plan = req.plan;
 
         if (plan !== 'premium') {
@@ -177,7 +182,7 @@ export const removeImageObject = async (req, res) => {
 
         const { userId } = req.auth();
         const { object } = req.body;
-        const { image } = req.file;
+        const image = req.file;
         const plan = req.plan;
 
 
@@ -195,7 +200,7 @@ export const removeImageObject = async (req, res) => {
             resource_type: 'image'
         })
 
-        await sql` INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${`Removed ${object} form image`}', ${imageUrl}, 'image')`;
+        await sql` INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${`Removed ${object} from image`}, ${imageUrl}, 'image')`;
 
 
         res.json({ success: true, content: imageUrl })
@@ -207,4 +212,77 @@ export const removeImageObject = async (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
+
+export const resumeReview = async (req, res) => {
+    try {
+        const { userId } = req.auth();
+        const resume = req.file;
+        const plan = req.plan;
+
+        if (plan !== 'premium') {
+            return res.json({ success: false, message: "Only for premium users" });
+        }
+
+        if (resume.size > 10 * 1024 * 1024) {
+            return res.json({ success: false, message: 'Resume file exceeds allowed size (10MB)' });
+        }
+
+        const data = new Uint8Array(fs.readFileSync(resume.path));
+        const pdf = await pdfjsLib.getDocument({
+            data,
+            standardFontDataUrl: 'node_modules/pdfjs-dist/standard_fonts/',
+        }).promise;
+
+        let extractedText = '';
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            const pageText = content.items.map(item => item.str).join(' ');
+            extractedText += pageText + '\n';
+        }
+
+
+        const prompt = `
+        Review the following resume and provide constructive feedback on its strengths and areas for improvement.
+        Also, provide an estimated ATS score for this resume.
+
+        Resume Content:
+        ${extractedText}
+        `;
+
+
+        const response = await AI.chat.completions.create({
+            model: "gemini-2.0-flash",
+            messages: [{
+                role: "user",
+                content: prompt,
+            }],
+            temperature: 0.7,
+            max_tokens: 1000,
+        });
+
+        const content = response.choices[0].message.content;
+
+
+        await sql`
+            INSERT INTO creations (user_id, prompt, content, type)
+            VALUES (${userId}, 'Review the uploaded resume', ${content}, 'review-resume')
+        `;
+
+
+        res.json({ success: true, content });
+
+    } catch (error) {
+        console.error(error.message);
+        res.json({ success: false, message: error.message });
+    }
+};
+
+
+
+
+
+
+
+
 

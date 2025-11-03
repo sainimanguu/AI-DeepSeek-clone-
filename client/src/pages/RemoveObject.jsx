@@ -63,7 +63,7 @@ const RemoveObject = () => {
 
                 <textarea onChange={(e) => setObject(e.target.value)} value={object} rows={4} type="text" placeholder="e.g. watch or spoon, Only single object name..." className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300' required />
 
-                <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#417DF6] to-[#8E37EB] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
+                <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#417DF6] to-[#8E37EB] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90 cursor-pointer '}`}>
 
                     {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'>
                     </span> : <Scissors className='w-5' />}

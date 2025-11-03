@@ -86,7 +86,7 @@ const GenerateImages = () => {
                     <p className='text-sm'>Make this Image Public</p>
                 </div>
 
-                <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#02831e] to-[#02d749] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>{loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'>
+                <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-linear-to-r from-[#02831e] to-[#02d749] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90 cursor-pointer '}`}>{loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'>
                 </span> : <Image className='w-5' />}
                     {loading ? "Generating..." : "Generate Image"}
                 </button>

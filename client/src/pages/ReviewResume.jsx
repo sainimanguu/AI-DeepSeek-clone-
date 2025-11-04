@@ -19,7 +19,7 @@ const ReviewResume = () => {
         e.preventDefault();
 
         if (!file) {
-            toast.error("Please upload a PDF resume first.");
+            toast.error("Please upload a resume in PDF first.");
             return;
         }
 

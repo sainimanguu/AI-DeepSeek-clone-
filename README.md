@@ -90,12 +90,5 @@ Feel free to fork the repository and submit a pull request.
 
 ---
 
-## 📬 Contact
-**Developer:** Umang Saini  
-📧 Email: your-email@example.com  
-🌐 Portfolio: your-portfolio-link  
-
----
-
 ## ⭐ Support
 If you like this project, please give it a ⭐ on GitHub!

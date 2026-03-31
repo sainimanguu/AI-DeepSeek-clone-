@@ -1,4 +1,4 @@
-# 🚀 AI SaaS Platform
+# 🚀 AI SaaS Platform:
 
 An all-in-one **AI-powered SaaS platform** that provides multiple intelligent tools to automate and enhance everyday digital tasks such as **content creation, image processing, and resume analysis**.
 
